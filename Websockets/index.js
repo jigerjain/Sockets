@@ -11,8 +11,12 @@ var server = app.listen(4000, function(){
 
 app.use(express.static('public'));
 
-// Sokcet setup
+// Socket setup
 var io = socket(server);
 io.on('connection', function(socket){
     console.log('Made socket connection',socket.id);
+
+    socket.on('chat', function(data){
+        io.sockets.emit('chat', data);
+    });
 });
