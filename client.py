@@ -85,7 +85,7 @@ while True:
     condition will evaluate as true"""
     read_sockets,write_socket, error_socket = select.select(sockets_list,[],[]) 
   
-    for socks in read_sockets: 
+    for socks in read_sockets:  
         if socks == server: 
             message = socks.recv(2048) 
             print message 
@@ -94,6 +94,8 @@ while True:
             server.send(message) 
             sys.stdout.write(sys.argv[3]) 
             sys.stdout.write(": > ") 
-            sys.stdout.write(message) 
+            sys.stdout.write(message)
             sys.stdout.flush() 
+        print("\nType your message here:")
+            
 server.close() 

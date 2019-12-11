@@ -113,8 +113,8 @@ listens for 100 active connections. This number can be
 increased as per convenience. 
 """
 server.listen(100) 
-
 list_of_clients = [] 
+
 print "Chat room initiated"
 def clientthread(conn, addr): 
 	# sends a message to the client whose user object is conn 
