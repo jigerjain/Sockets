@@ -1,5 +1,3 @@
-
-
 # Python program to implement server side of chat room. 
 import socket 
 import select 
@@ -26,17 +24,11 @@ IP_address = str(sys.argv[1])
 # takes second argument from command prompt as port number 
 Port = int(sys.argv[2]) 
 
-""" 
-binds the server to an entered IP address and at the 
-specified port number. 
-The client must be aware of these parameters 
-"""
+# binds the server to an entered IP address and at the specified port number. 
+# The client must be aware of these parameters 
 server.bind((IP_address, Port)) 
 
-""" 
-listens for 100 active connections. This number can be 
-increased as per convenience. 
-"""
+#listens for 100 active connections. This number can be increased as per convenience. 
 server.listen(100) 
 list_of_clients = [] 
 
@@ -51,9 +43,7 @@ def clientthread(conn, addr):
 				message = conn.recv(2048) 
 				if message: 
 
-					"""prints the message and address of the 
-					user who just sent the message on the server 
-					terminal"""
+    #prints the message and address of the user who just sent the message 
 					print "<" + name + "> " + message 
 
 					# Calls broadcast function to send message to all 
@@ -61,16 +51,13 @@ def clientthread(conn, addr):
 					broadcast(message_to_send, conn) 
 
 				else: 
-					"""message may have no content if the connection 
-					is broken, in this case we remove the connection"""
 					remove(conn) 
 
 			except: 
 				continue
 
-"""Using the below function, we broadcast the message to all 
-clients who's object is not the same as the one sending 
-the message """
+"""Using the below function, we broadcast the message to all  clients who's 
+object is not the same as the one sending the message """
 def broadcast(message, connection): 
 	for clients in list_of_clients: 
 		if clients!=connection: 
@@ -90,22 +77,19 @@ def remove(connection):
 		list_of_clients.remove(connection) 
 
 while True: 
-
 	"""Accepts a connection request and stores two parameters, 
 	conn which is a socket object for that user, and addr 
 	which contains the IP address of the client that just 
 	connected"""
 	conn, addr = server.accept() 
 
-	"""Maintains a list of clients for ease of broadcasting 
-	a message to all available people in the chatroom"""
+	#Maintains a list of clients for ease of broadcasting 
 	list_of_clients.append(conn) 
 
 	# prints the address of the user that just connected 
 	print addr[0] + " connected"
 
-	# creates and individual thread for every user 
-	# that connects 
+	# creates and individual thread for every user that connects 
 	start_new_thread(clientthread,(conn,addr))	 
 
 conn.close() 
